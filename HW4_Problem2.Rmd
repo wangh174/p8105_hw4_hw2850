@@ -1,0 +1,20 @@
+---
+title: "HW4_Problem2"
+author: "Haoyang Wang"
+date: "2022-10-29"
+output: github_document
+---
+load packages
+```{r}
+library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+```
+
+```{r}
+data("rest_inspec")
+nyc_restaurant = rest_inspec %>% 
+  select(boro, cuisine_description, inspection_date, score, grade)
+  
+```
+
