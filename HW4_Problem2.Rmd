@@ -2,7 +2,10 @@
 title: "HW4_Problem2"
 author: "Haoyang Wang"
 date: "2022-10-29"
-output: github_document
+output:
+  html_document:
+    toc: true
+    toc_float: true
 ---
 #load packages
 ```{r}
@@ -19,5 +22,15 @@ nyc_restaurant = rest_inspec %>%
   na.omit()
 ```
 
+#make a bar plot with count of different types of restaurant
+```{r}
+nyc_restaurant %>% 
+  count(cuisine_description) %>% 
+  mutate(cuisine_description = fct_reorder(cuisine_description, n)) %>% 
+  plot_ly(
+    x = ~cuisine_description, y = ~n, color = ~cuisine_description, type = "bar",
+    colors = "viridis"
+  )
+```
 
 
