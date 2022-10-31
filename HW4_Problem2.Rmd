@@ -62,3 +62,8 @@ nyc_restaurant %>%
   )
 ```
 
+#load package flexdashboard
+```{r}
+library(flexdashboard)
+```
+
