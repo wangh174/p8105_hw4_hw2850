@@ -1,0 +1,74 @@
+---
+title: "NYC Restaurants"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(plotly)
+library(p8105.datasets)
+```
+
+```{r}
+#filter dataset with variables boro, cuisine_description, inspection_date, score, grade only
+data("rest_inspec")
+nyc_restaurant = rest_inspec %>% 
+  select(boro, cuisine_description, inspection_date, score, grade) %>% 
+  filter(.data = ., boro == "MANHATTAN") %>% 
+  na.omit()
+```
+
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Bar Plot with the Grade of NYC Restaurants
+
+```{r}
+nyc_restaurant %>% 
+  group_by(cuisine_description, grade) %>% 
+  summarize(count = n()) %>% 
+  plot_ly(
+    y = ~count, x = ~cuisine_description, color = ~grade, 
+    type = "bar", colors = "viridis"
+  )
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Box Plot of the Inspection Score of NYC Restaurants
+
+```{r}
+nyc_restaurant %>% 
+  mutate(cuisine_description = fct_reorder(cuisine_description, score)) %>% 
+  plot_ly(y = ~score, color = ~cuisine_description, type = "box", colors = "viridis")
+```
+
+### Scatter Plot of the Inspection Score of NYC Restaurants Across Years 
+
+```{r}
+nyc_restaurant %>% 
+  mutate(inspection_date = as.Date(inspection_date)) %>%
+  plot_ly(
+    x = ~inspection_date, y = ~score, type = "scatter", mode = "markers",
+    color = ~cuisine_description, alpha = 0.5
+  )
+```
+
+### Bar Plot of NYC Restaurants 
+
+```{r}
+nyc_restaurant %>% 
+  count(cuisine_description) %>% 
+  mutate(cuisine_description = fct_reorder(cuisine_description, n)) %>% 
+  plot_ly(
+    x = ~cuisine_description, y = ~n, color = ~cuisine_description, type = "bar",
+    colors = "viridis"
+  )
+```
+
