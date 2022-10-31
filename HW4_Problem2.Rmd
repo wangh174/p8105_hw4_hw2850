@@ -36,10 +36,12 @@ nyc_restaurant %>%
 #make a scatter plot with the score of different types of restaurant
 ```{r}
 nyc_restaurant %>% 
-  plot_ly(
-    x = ~cuisine_description, y = ~score, type = "scatter", mode = "markers",
-    color = ~cuisine_description, alpha = 0.5
-  )
+  mutate(cuisine_description = fct_reorder(cuisine_description, score)) %>% 
+  plot_ly(y = ~score, color = ~cuisine_description, type = "box", colors = "viridis")
 ```
+
+
+
+
 
 
