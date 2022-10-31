@@ -72,3 +72,7 @@ nyc_restaurant %>%
   )
 ```
 
+```{r}
+rmarkdown::render("flexdashboard.Rmd", output_format = "flexdashboard::flex_dashboard")
+```
+
