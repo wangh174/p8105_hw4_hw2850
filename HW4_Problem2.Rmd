@@ -14,6 +14,7 @@ library(p8105.datasets)
 library(plotly)
 ```
 
+#filter dataset with variables boro, cuisine_description, inspection_date, score, grade only
 ```{r}
 data("rest_inspec")
 nyc_restaurant = rest_inspec %>% 
@@ -33,7 +34,7 @@ nyc_restaurant %>%
   )
 ```
 
-#make a scatter plot with the score of different types of restaurant
+#make a box plot with the score of different types of restaurant
 ```{r}
 nyc_restaurant %>% 
   mutate(cuisine_description = fct_reorder(cuisine_description, score)) %>% 
@@ -48,6 +49,16 @@ nyc_restaurant %>%
   plot_ly(
     y = ~count, x = ~cuisine_description, color = ~grade, 
     type = "bar", colors = "viridis"
+  )
+```
+
+#make a scatter plot with the score of different types of restaurant across years
+```{r}
+nyc_restaurant %>% 
+  mutate(inspection_date = as.Date(inspection_date)) %>%
+  plot_ly(
+    x = ~inspection_date, y = ~score, type = "scatter", mode = "markers",
+    color = ~cuisine_description, alpha = 0.5
   )
 ```
 
