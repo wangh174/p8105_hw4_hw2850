@@ -40,8 +40,14 @@ nyc_restaurant %>%
   plot_ly(y = ~score, color = ~cuisine_description, type = "box", colors = "viridis")
 ```
 
-
-
-
-
+#make a bar plot with the grade of different types of restaurant
+```{r}
+nyc_restaurant %>% 
+  group_by(cuisine_description, grade) %>% 
+  summarize(count = n()) %>% 
+  plot_ly(
+    y = ~count, x = ~cuisine_description, color = ~grade, 
+    type = "bar", colors = "viridis"
+  )
+```
 
